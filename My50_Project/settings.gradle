@@ -1,0 +1,2 @@
+rootProject.name='My50_Project'
+include ':app'
