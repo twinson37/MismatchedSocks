@@ -15,7 +15,7 @@ import java.io.IOException;
 public class CommonMethod {
 
     /*public static String  ipConfig = "http://192.168.200.151:8989";*/
-    public static String  ipConfig = "localhost:8080";
+    public static String  ipConfig = "http://172.17.78.150:8082";
     //public static String ipConfig = "http://121.148.239.200:80";
 
     // 네트워크에 연결되어 있는가
