@@ -29,6 +29,10 @@ public class MemberApiController {
         Member member = new Member();
         member.setUser_id(request.getUser_id());
         member.setPassword(request.getPassword());
+        member.setAddress(request.getAddress());
+        member.setName(request.getName());
+        member.setPhonenumber((request.getPhonenumber()));
+
         memberService.join(member);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(request.getUser_id());
@@ -75,6 +79,16 @@ public class MemberApiController {
         private String user_id;
         @NotEmpty
         private String password;
+//        @NotEmpty
+//        private String id;
+//        @NotEmpty
+//        private String passwd;
+        @NotEmpty
+        private String name;
+        @NotEmpty
+        private String phonenumber;
+        @NotEmpty
+        private String address;
     }
 
     @Data

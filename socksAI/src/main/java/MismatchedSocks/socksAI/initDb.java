@@ -24,15 +24,18 @@ public class initDb {
         private final EntityManager em;
 
         public void dbInit1() {
-            Member member = createMember("test", "test");
+            Member member = createMember("test", "test","test","test","test");
             em.persist(member);
 
         }
 
-        private Member createMember(String user_id, String password) {
+        private Member createMember(String user_id, String password,String name, String adress, String phonenumber) {
             Member member = new Member();
             member.setUser_id(user_id);
             member.setPassword(password);
+            member.setAddress(name);
+            member.setName(adress);
+            member.setPhonenumber(adress);
             return member;
         }
     }

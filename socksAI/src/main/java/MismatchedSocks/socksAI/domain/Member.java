@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class Member {
 
     private String user_id;
     private String password;
+    private String name;
+    private String phonenumber;
+    private String address;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Img> img = new ArrayList<>();
