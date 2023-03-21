@@ -2,6 +2,7 @@ package MismatchedSocks.socksAI.controller;
 
 import MismatchedSocks.socksAI.domain.Member;
 import MismatchedSocks.socksAI.service.MemberService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class MemberApiController {
 
     private final MemberService memberService;
-
+    @ApiOperation(value = "회원가입", notes = "회원가입이 가능합니다")
     @PostMapping("/join")
     public ResponseEntity<String> saveMember(@Valid @ModelAttribute CreateMemberRequest request) {
         Member member = new Member();
@@ -40,6 +41,7 @@ public class MemberApiController {
                 .body(request.getUser_id());
     }
 
+    @ApiOperation(value = "로그인", notes = "로그인이 가능합니다.")
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @ModelAttribute LoginForm form,
                                         BindingResult bindingResult, HttpServletRequest request) {
@@ -65,6 +67,7 @@ public class MemberApiController {
                 .body(loginMember.getUser_id());
     }
 
+    @ApiOperation(value = "로그아웃", notes = "로그인 했을 시 가능합니다.")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -75,6 +78,7 @@ public class MemberApiController {
                 .body("logout");
     }
 
+    @ApiOperation(value = "멤버 전체 조회", notes = "가입된 모든 멤버를 조회 가능 합니다.")
     @GetMapping("/members")
     public Result members(){
         List<Member> members = memberService.findMembers();
@@ -85,6 +89,7 @@ public class MemberApiController {
         return new Result(collect);
     }
 
+    @ApiOperation(value = "멤버 조회", notes = "회원의 아이디를 입력해 가입된 아이디인지 확인할 수 있습니다.")
     @GetMapping("/member")
     public MemberDto members(@ModelAttribute @Valid MemberDto member){
         Optional<Member> findMember = memberService.findByUserId(member.getUser_id());

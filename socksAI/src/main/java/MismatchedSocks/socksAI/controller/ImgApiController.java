@@ -4,6 +4,7 @@ import MismatchedSocks.socksAI.domain.Img;
 import MismatchedSocks.socksAI.domain.Member;
 import MismatchedSocks.socksAI.service.ImgService;
 import MismatchedSocks.socksAI.service.MemberService;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class ImgApiController {
     private final ImgService imgService;
     private final MemberService memberService;
 
+    @ApiOperation(value = "이미지 등록", notes = "이미지를 업로드 가능합니다.")
     @PostMapping(value = "/img")
     public ResponseEntity<?> uploadImageToFileSystem(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException {
 
