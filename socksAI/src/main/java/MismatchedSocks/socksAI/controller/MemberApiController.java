@@ -64,7 +64,7 @@ public class MemberApiController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logoutV3(HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
