@@ -3,11 +3,11 @@ package MismatchedSocks.socksAI.service;
 import MismatchedSocks.socksAI.domain.Member;
 import MismatchedSocks.socksAI.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,7 +35,7 @@ public class MemberService {
     public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);
     }
-
+    public Optional<Member> findByUserId(String user_id){return memberRepository.findByLoginId(user_id);}
     public Member login(String loginId, String password) {
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> m.getPassword().equals(password))
