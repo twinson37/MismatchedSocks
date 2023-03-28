@@ -1,6 +1,6 @@
 FROM adoptopenjdk/openjdk11
 
-COPY ./build/libs/socksAI-0.0.1-SNAPSHOT.jar app.jar
+COPY ./socksAI//build/libs/socksAI-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
