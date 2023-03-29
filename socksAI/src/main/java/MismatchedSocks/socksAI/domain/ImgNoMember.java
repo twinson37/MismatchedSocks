@@ -8,8 +8,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-
-
 public class ImgNoMember {
     @Id
     @GeneratedValue
