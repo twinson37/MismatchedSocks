@@ -1,10 +1,12 @@
 package MismatchedSocks.socksAI.repository;
 
 import MismatchedSocks.socksAI.domain.Img;
+import MismatchedSocks.socksAI.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,6 +20,10 @@ public class ImgRepository {
     public Img findOne(Long id){
         return em.find(Img.class,id);
     }
+    public List<Img> findAll() {
+        return em.createQuery("select i from Img i", Img.class)
+                .getResultList();
+    }
 
 //    public List<File> findALl(File file){
 //
@@ -28,4 +34,5 @@ public class ImgRepository {
 //                .setMaxResults(1000)// max 1000 gae
 //                .getResultList();
 //    }
+
 }

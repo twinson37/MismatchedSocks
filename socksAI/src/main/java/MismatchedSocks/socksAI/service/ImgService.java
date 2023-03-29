@@ -16,6 +16,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,11 +32,11 @@ public class ImgService {
     public String getFullPath(String filename) {
         return fileDir + filename;
     }
-    private final ImgRepository ImgRepository;
+    private final ImgRepository imgRepository;
     private final MemberService memberService;
 
     public void saveItem(Img item){
-        ImgRepository.save(item);
+        imgRepository.save(item);
     }
 
 //    public List<File> findFiles(){
@@ -43,7 +44,7 @@ public class ImgService {
 //    }
 
     public  Img findOne(Long itemId){
-        return ImgRepository.findOne(itemId);
+        return imgRepository.findOne(itemId);
     }
     @Transactional
     public Long storeImg(MultipartFile multipartFile, HttpSession session) throws IOException {
@@ -79,7 +80,7 @@ public class ImgService {
         img.setUUID(storeFileName);
         img.setMember(member);
 
-        ImgRepository.save(img);
+        imgRepository.save(img);
         return img.getId();
     }
     private String createStoreFileName(String originalFilename,Img img) {
@@ -93,5 +94,10 @@ public class ImgService {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
+
+    public List<Img> findImages() {
+        return imgRepository.findAll();
+    }
+
 
 }

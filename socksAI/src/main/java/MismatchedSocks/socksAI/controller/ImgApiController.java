@@ -5,6 +5,7 @@ import MismatchedSocks.socksAI.domain.Member;
 import MismatchedSocks.socksAI.service.ImgService;
 import MismatchedSocks.socksAI.service.MemberService;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +48,30 @@ public class ImgApiController {
                 .body(uploadImage);
 
 
+    }
+
+    @ApiOperation(value = "이미지 전체 조회", notes = "업로드 된 이미지를 조회 가능 합니다.")
+    @GetMapping("/img")
+    public Result images(){
+        List<Img> images = imgService.findImages();
+        List<ImageDTO> collect = images.stream()
+                .map(m-> new ImageDTO(m.getMember().getUser_id(),m.getName()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class ImageDTO{
+        private String user_id;
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class Result<T>{
+        private T data;
     }
 
 //    @PostMapping(value = "/img")
