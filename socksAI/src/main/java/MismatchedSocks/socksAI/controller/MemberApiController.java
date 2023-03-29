@@ -83,7 +83,7 @@ public class MemberApiController {
     public Result members(){
         List<Member> members = memberService.findMembers();
         List<MemberDto> collect = members.stream()
-                .map(m-> new MemberDto(m.getUser_id()))
+                .map(m-> new MemberDto(m.getUser_id(),m.getPassword()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -91,18 +91,40 @@ public class MemberApiController {
 
     @ApiOperation(value = "멤버 조회", notes = "회원의 아이디를 입력해 가입된 아이디인지 확인할 수 있습니다.")
     @GetMapping("/member")
-    public MemberDto members(@ModelAttribute @Valid MemberDto member){
+    public MemberDto members(@ModelAttribute @Valid MemberIdDto member){
         Optional<Member> findMember = memberService.findByUserId(member.getUser_id());
         if(findMember.isEmpty()){
-            return new MemberDto("NO USER");
+            return new MemberDto("NO USER","NO PASSWORD");
         }
-        return new MemberDto(findMember.get().getUser_id());
+        return new MemberDto(findMember.get().getUser_id(),findMember.get().getPassword());
 
     }
+    @ApiOperation(value = "멤버 삭제", notes = "회원의 아이디를 입력해 가입된 아이디를 삭제할 수 있습니다.")
+    @DeleteMapping("/member")
+    public String delete(@ModelAttribute @Valid MemberDto member){
+        Optional<Member> findMember = memberService.findByUserId(member.getUser_id());
+        if(findMember.isEmpty()){
+            return "NO USER";
+        }
+        if(findMember.get().getPassword().compareTo(member.getPassword())!=0){
+            return "PASSWORD IS WRONG";
+        }
+
+
+        return memberService.quit(findMember.get())+" deleted";
+
+    }
+
 
     @Data
     @AllArgsConstructor
     public static class MemberDto{
+        private String user_id;
+        private String password;
+    }
+    @Data
+    @AllArgsConstructor
+    public static class MemberIdDto{
         private String user_id;
     }
 

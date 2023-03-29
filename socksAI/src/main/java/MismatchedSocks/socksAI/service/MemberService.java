@@ -21,6 +21,11 @@ public class MemberService {
         memberRepository.save(member);
         return member.getId();
     }
+    @Transactional
+    public String quit(Member member){
+        memberRepository.delete(member);
+        return member.getUser_id();
+    }
 
     private void validateDuplicateMember(Member member) {
         List<Member> findMembers =
