@@ -33,15 +33,18 @@ public class ImgApiController {
         System.out.println(request);
 //        Img img = new Img();
         HttpSession session = request.getSession();
-//        if (session == null) {
-//            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-//                    .body("login first");
-//        }
-//        if(session.getAttribute("loginMember")==null){
-//            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-//                    .body("login first");
-//        }
-//        Member member = (Member) session.getAttribute("loginMember");
+        if (session == null) {
+            System.out.println("no session");
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body("login first");
+        }
+        if(session.getAttribute("loginMember")==null){
+            System.out.println("no cookie");
+
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body("login first");
+        }
+        Member member = (Member) session.getAttribute("loginMember");
         Long img_id = imgService.storeImg(file,session);
         String uploadImage = imgService.findOne(img_id).getName();
         return ResponseEntity.status(HttpStatus.OK)
