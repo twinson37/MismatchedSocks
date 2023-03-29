@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ImgApiController {
 
     private final ImgService imgService;
@@ -30,16 +32,18 @@ public class ImgApiController {
     @ApiOperation(value = "이미지 등록", notes = "이미지를 업로드 가능합니다.")
     @PostMapping(value = "/img-upload")
     public ResponseEntity<?> uploadImageToFileSystem(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException {
-        System.out.println(request);
+        log.info("uploadImage request!!");
+
 //        Img img = new Img();
         HttpSession session = request.getSession();
         if (session == null) {
-            System.out.println("no session");
+            log.info("No Session");
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("login first");
         }
         if(session.getAttribute("loginMember")==null){
-            System.out.println("no cookie");
+            log.info("No Cookie");
+
 
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("login first");
