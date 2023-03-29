@@ -34,6 +34,10 @@ public class ImgApiController {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
                     .body("login first");
         }
+        if(session.getAttribute("loginMember")==null){
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body("login first");
+        }
 //        Member member = (Member) session.getAttribute("loginMember");
         Long img_id = imgService.storeImg(file,session);
         String uploadImage = imgService.findOne(img_id).getName();
