@@ -22,7 +22,7 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ImgService {
-    Path directoryPath = Path.of(System.getProperty("user.home"));
+    private final Path directoryPath = Path.of(System.getProperty("user.home"));
 
 //    Path currentPath = Paths.get("");
 //    String path = currentPath.toAbsolutePath().toString();
@@ -48,19 +48,23 @@ public class ImgService {
     @Transactional
     public Long storeImg(MultipartFile multipartFile, HttpSession session) throws IOException {
 
-        try{
-            // 디렉토리 생성
-            Files.createDirectory(directoryPath);
-
-            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
-
-        } catch (FileAlreadyExistsException e) {
-            System.out.println("디렉토리가 이미 존재합니다");
-        } catch (NoSuchFileException e) {
-            System.out.println("디렉토리 경로가 존재하지 않습니다");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        File file = new File(String.valueOf(fileDir));
+        System.out.println(fileDir);
+        // 디렉토리 생성
+        file.mkdirs();
+//        try{
+//            // 디렉토리 생성
+//            Files.createDirectory(directoryPath);
+//
+//            System.out.println(directoryPath + " 디렉토리가 생성되었습니다.");
+//
+//        } catch (FileAlreadyExistsException e) {
+//            System.out.println("디렉토리가 이미 존재합니다");
+//        } catch (NoSuchFileException e) {
+//            System.out.println("디렉토리 경로가 존재하지 않습니다");
+//        }catch (IOException e) {
+//            e.printStackTrace();
+//        }
         if (multipartFile.isEmpty()) {
             return null;
         }
