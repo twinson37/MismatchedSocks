@@ -30,7 +30,7 @@ public class ImgApiController {
     @ApiOperation(value = "이미지 등록", notes = "이미지를 업로드 가능합니다.")
     @PostMapping(value = "/img-upload")
     public ResponseEntity<?> uploadImageToFileSystem(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException {
-
+        System.out.println(request);
 //        Img img = new Img();
         HttpSession session = request.getSession();
         if (session == null) {
