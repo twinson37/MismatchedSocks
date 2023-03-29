@@ -21,7 +21,7 @@ public class ImgRepositoryNoSession {
         return em.find(ImgNoMember.class,id);
     }
     public List<ImgNoMember> findAll() {
-        return em.createQuery("select i from Img i", ImgNoMember.class)
+        return em.createQuery("select i from ImgNoMember i", ImgNoMember.class)
                 .getResultList();
     }
 }
