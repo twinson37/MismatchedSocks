@@ -76,7 +76,7 @@ public class ImgApiController {
     @Data
     @AllArgsConstructor
     public static class ImageDTONoMember{
-        private String user_id;
+        private String file_name;
     }
 
     @Data
