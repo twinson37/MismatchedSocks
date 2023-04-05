@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    hikari:
+      url: jdbc:h2:tcp://localhost/~/test;
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging.level: #띄어쓰기 없음
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
