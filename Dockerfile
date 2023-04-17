@@ -6,7 +6,7 @@ RUN apt-get upgrade -y
 RUN apt update && apt upgrade -y && apt clean
 
 RUN rm -rf ./root/yolov5
-RUN rm -rf ./root/MismathcedSocks
+RUN rm -rf ./root/MismatchedSocks
 
 RUN git clone https://github.com/twinson37/yolov5.git ./root/yolov5
 RUN git clone https://github.com/twinson37/MismatchedSocks.git ./root/MismatchedSocks
