@@ -35,6 +35,7 @@ public class ImgServiceNoSession {
         }
         private final ImgRepositoryNoSession imgRepository;
         private final MemberService memberService;
+        String storeFileName;
 
         public void saveItem(ImgNoMember img){
             imgRepository.save(img);
@@ -74,7 +75,7 @@ public class ImgServiceNoSession {
             img.setName(multipartFile.getOriginalFilename());
 //        System.out.println("!!!member = " + member.getUser_id());
             String originalFilename = multipartFile.getOriginalFilename();
-            String storeFileName = createStoreFileName(originalFilename,img);
+            storeFileName = createStoreFileName(originalFilename,img);
             multipartFile.transferTo(new File(getFullPath(storeFileName)));
             img.setUUID(storeFileName);
 
@@ -100,10 +101,11 @@ public class ImgServiceNoSession {
 
 //        private static PythonInterpreter interpreter;
 
-       public void py_detect() throws IOException, InterruptedException {
+        public void py_detect() throws IOException, InterruptedException {
+
             String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
             System.out.println("dir = " + dir);
-            ProcessBuilder pb = new ProcessBuilder("python3", dir);
+            ProcessBuilder pb = new ProcessBuilder("python3", dir,storeFileName);
             pb.directory(new File(String.valueOf(directoryPath)));
             Process p = pb.start();
             System.out.println("start");
