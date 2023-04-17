@@ -8,7 +8,7 @@ RUN apt update && apt upgrade -y && apt clean
 RUN git clone https://github.com/twinson37/yolov5.git ./root/yolov5
 RUN git clone https://github.com/twinson37/MismatchedSocks.git ./root/MismatchedSocks
 
-COPY ./socksAI//build/libs/socksAI-0.0.1-SNAPSHOT.jar app.jar
+COPY ./socksAI/build/libs/socksAI-0.0.1-SNAPSHOT.jar ./root/app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
