@@ -100,31 +100,41 @@ public class ImgServiceNoSession {
 
 //        private static PythonInterpreter interpreter;
 
-        public void py_detect() throws IOException, InterruptedException {
+       public void py_detect() throws IOException, InterruptedException {
             String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
+            System.out.println("dir = " + dir);
             ProcessBuilder pb = new ProcessBuilder("python", dir);
             pb.directory(new File(String.valueOf(directoryPath)));
             Process p = pb.start();
-
+            System.out.println("start");
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(),"UTF-8"));
             try{
+                System.out.println("first try");
+
                 String line="";
                 while((line = br.readLine())!=null){
+                    System.out.println("readline");
+
                     System.out.println(">>> " + line);
 
                 }
             }catch(Exception e){
+                System.out.println("Exception");
 
                 e.printStackTrace();
             }finally {
+                System.out.println("finally");
 
                 try{
+                    System.out.println("try");
 
                     if(br!=null){
+                        System.out.println("br.close");
 
                         br.close();
                     }
                 }catch(Exception e){
+                    System.out.println("execption2");
 
                     e.printStackTrace();
                 }
