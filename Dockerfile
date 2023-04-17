@@ -4,7 +4,10 @@ FROM adoptopenjdk/openjdk11
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y python-pip python-dev build-essential
+RUN apt-get install -y software-properties-common && sudo add-apt-repository ppa:deadsnakes/ppa && apt-get update && apt-get install -y \
+  python3.8 \
+  python3-pip \
+  && rm -rf /var/lib/apt/lists/*
 # container에 git 설치
 RUN apt-get install git -y
 RUN git clone https://github.com/twinson37/yolov5.git ./root/yolov5
