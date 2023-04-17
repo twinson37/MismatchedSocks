@@ -9,8 +9,8 @@ model = torch.hub.load('twinson37/yolov5', 'custom', path= f'{home_path}/Mismatc
 # model = torch.hub.load('twinson37/yolov5', 'custom', path= f'{home_path}/MismatchedSocks/best.pt', source='local')  
 
 # Images
-im = '/Users/kimjungi/KakaoTalk_Photo_2023-01-31-11-04-51 021.jpeg'  # or file, Path, URL, PIL, OpenCV, numpy, list
-# im = f'{home_path}/img/{arg}'
+# im = '/Users/kimjungi/KakaoTalk_Photo_2023-01-31-11-04-51 021.jpeg'  # or file, Path, URL, PIL, OpenCV, numpy, list
+im = f'{home_path}/img/{arg}'
 
 # Inference
 results = model(im)
