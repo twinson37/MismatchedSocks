@@ -18,7 +18,6 @@ permissions:
 
 jobs:
   build:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -54,6 +53,7 @@ jobs:
         username: ${{ secrets.WAS_USERNAME }}
         password: ${{ secrets.WAS_PASSWORD }}
         port: ${{ secrets.WAS_SSH_PORT }}
+        command_timeout: 300m
         script: |
           docker stop $(docker ps -a -q) 
           docker rm $(docker ps -a -q) 
