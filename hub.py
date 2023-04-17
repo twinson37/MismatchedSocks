@@ -10,7 +10,7 @@ model = torch.hub.load('twinson37/yolov5', 'custom', path= f'{home_path}/Mismatc
 
 # Images
 # im = '/Users/kimjungi/KakaoTalk_Photo_2023-01-31-11-04-51 021.jpeg'  # or file, Path, URL, PIL, OpenCV, numpy, list
-im = f'{home_path}/img/{arg}'
+im = f'{home_path}/img/{arg[1]}'
 
 # Inference
 results = model(im)
