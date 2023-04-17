@@ -11,13 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ImgServiceNoSession {
 
@@ -46,7 +48,7 @@ public class ImgServiceNoSession {
             return imgRepository.findOne(itemId);
         }
         @Transactional
-        public Long storeImg(MultipartFile multipartFile) throws IOException {
+        public Long storeImg(MultipartFile multipartFile) throws IOException, InterruptedException {
 
             File file = new File(String.valueOf(fileDir));
             System.out.println(fileDir);
@@ -77,6 +79,7 @@ public class ImgServiceNoSession {
             img.setUUID(storeFileName);
 
             imgRepository.save(img);
+            py_detect();
             return img.getId();
         }
         private String createStoreFileName(String originalFilename,ImgNoMember img) {
@@ -95,6 +98,39 @@ public class ImgServiceNoSession {
             return imgRepository.findAll();
         }
 
+//        private static PythonInterpreter interpreter;
 
+        public void py_detect() throws IOException, InterruptedException {
+            String dir = String.format("%s/yolov5/hub.py",directoryPath);
+            ProcessBuilder pb = new ProcessBuilder("python", dir);
+            pb.directory(new File(String.valueOf(directoryPath)));
+            Process p = pb.start();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(),"UTF-8"));
+            try{
+                String line="";
+                while((line = br.readLine())!=null){
+                    System.out.println(">>> " + line);
+
+                }
+            }catch(Exception e){
+
+                e.printStackTrace();
+            }finally {
+
+                try{
+
+                    if(br!=null){
+
+                        br.close();
+                    }
+                }catch(Exception e){
+
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
 
 }
