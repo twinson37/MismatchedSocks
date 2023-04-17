@@ -1,4 +1,4 @@
-FROM twinson37/jdk-python:init
+FROM twinson37/jdk-python
 
 RUN apt-get update
 RUN apt-get upgrade -y
