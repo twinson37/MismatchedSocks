@@ -101,7 +101,7 @@ public class ImgServiceNoSession {
 //        private static PythonInterpreter interpreter;
 
         public void py_detect() throws IOException, InterruptedException {
-            String dir = String.format("%s/yolov5/hub.py",directoryPath);
+            String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
             ProcessBuilder pb = new ProcessBuilder("python", dir);
             pb.directory(new File(String.valueOf(directoryPath)));
             Process p = pb.start();

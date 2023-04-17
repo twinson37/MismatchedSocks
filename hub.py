@@ -5,7 +5,8 @@ import sys
 arg = sys.argv
 home_path = os.path.expanduser('~')
 # model = torch.hub.load('ultralytics/yolov5', 'custom', path='/Users/kimjungi/back/eunhy/yolov5/best.pt')
-model = torch.hub.load(f'{home_path}/yolov5-master', 'custom', path= f'{home_path}/yolov5/best.pt', source='local')  
+model = torch.hub.load('twinson37/yolov5', 'custom', path= f'{home_path}/MismatchedSocks/best.pt')  
+# model = torch.hub.load('twinson37/yolov5', 'custom', path= f'{home_path}/MismatchedSocks/best.pt', source='local')  
 
 # Images
 im = '/Users/kimjungi/KakaoTalk_Photo_2023-01-31-11-04-51 021.jpeg'  # or file, Path, URL, PIL, OpenCV, numpy, list
