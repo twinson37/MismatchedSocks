@@ -6,8 +6,8 @@ RUN apt-get update
 RUN apt-get upgrade -y
 # Upgrade installed packages
 RUN apt update && apt upgrade -y && apt clean
-RUN apt install python3.8
-RUN apt install pip
+RUN apt install python3.8 -y
+RUN apt install pip -y
 # container에 git 설치
 RUN apt-get install git -y
 RUN git clone https://github.com/twinson37/yolov5.git ./root/yolov5
