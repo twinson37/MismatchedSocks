@@ -14,10 +14,6 @@ RUN apt update && \
     apt install --no-install-recommends -y python3.7 python3.7-dev python3.7-distutils && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip to latest version
-RUN curl -s https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3 get-pip.py --force-reinstall && \
-    rm get-pip.py
 # container에 git 설치
 RUN apt-get install git -y
 RUN git clone https://github.com/twinson37/yolov5.git ./root/yolov5
