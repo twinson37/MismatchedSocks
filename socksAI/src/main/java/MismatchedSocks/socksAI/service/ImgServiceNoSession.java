@@ -107,7 +107,7 @@ public class ImgServiceNoSession {
             pb.directory(new File(String.valueOf(directoryPath)));
             Process p = pb.start();
             System.out.println("start");
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(),"UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             try{
                 System.out.println("first try");
 
