@@ -128,45 +128,49 @@ public class ImgServiceNoSession {
 
         public void py_detect() throws IOException, InterruptedException {
 
+            StringBuilder sb = new StringBuilder(1024);
             String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
             System.out.println("dir = " + dir);
             ProcessBuilder pb = new ProcessBuilder("python3", dir,storeFileName);
             pb.directory(new File(String.valueOf(directoryPath)));
+            pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+            pb.redirectError(ProcessBuilder.Redirect.INHERIT);
             Process p = pb.start();
-            System.out.println("start");
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            try{
-                System.out.println("first try");
-
-                String line="";
-                while((line = br.readLine())!=null){
-                    System.out.println("readline");
-
-                    System.out.println(">>> " + line);
-
-                }
-            }catch(Exception e){
-                System.out.println("Exception");
-
-                e.printStackTrace();
-            }finally {
-                System.out.println("finally");
-
-                try{
-                    System.out.println("try");
-
-                    if(br!=null){
-                        System.out.println("br.close");
-
-                        br.close();
-                    }
-                }catch(Exception e){
-                    System.out.println("execption2");
-
-                    e.printStackTrace();
-                }
-
-            }
+            p.waitFor();
+//            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//            try{
+//                System.out.println("first try");
+//
+//                String line="";
+//                while((line = br.readLine())!=null){
+//                    System.out.println("readline");
+//
+//                    System.out.println(">>> " + line);
+//                    sb.append(line);
+//                }
+//                p.getInputStream().close();
+//            }catch(Exception e){
+//                System.out.println("Exception");
+//
+//                e.printStackTrace();
+//            }finally {
+//                System.out.println("finally");
+//
+//                try{
+//                    System.out.println("try");
+//
+//                    if(br!=null){
+//                        System.out.println("br.close");
+//
+//                        br.close();
+//                    }
+//                }catch(Exception e){
+//                    System.out.println("execption2");
+//
+//                    e.printStackTrace();
+//                }
+//
+//            }
 
         }
 
