@@ -11,15 +11,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +78,39 @@ public class ImgApiController {
 
         return new Result(collect);
     }
+    @ApiOperation(value = "이미지 반환", notes = "탐색 이미지 반환.")
+    @ResponseBody
+    @GetMapping(
+            value = "/image-response",
+            produces = MediaType.IMAGE_JPEG_VALUE)
+    public  byte[] downloadImage() throws IOException {
+        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpg";
+        System.out.println("path = " + path);
+        InputStream imageStream = new FileInputStream(path);
+//        InputStream in = getClass().getResourceAsStream(imageStream);
+        return IOUtils.toByteArray(imageStream);
+    }
+    @ApiOperation(value = "이미지 다운", notes = "탐색 이미지 다운로드.")
 
+    @GetMapping("/image-download")
+    public ResponseEntity<Resource> downloadAttach() throws IOException {
+        Path directoryPath = Path.of(System.getProperty("user.home"));
+
+        UrlResource resource = new UrlResource("file:" +
+                directoryPath+"/runs/detect/exp/detected.jpg");
+        File file = resource.getFile();
+//        log.info("uploadFileName={}", uploadFileName);
+
+        String encodedUploadFileName = UriUtils.encode("detected.jpg",
+                StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" +
+                encodedUploadFileName + "\"";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .header(HttpHeaders.CONTENT_TYPE, "application/download")
+                .header(HttpHeaders.CONTENT_LENGTH,file.length()+"")
+                .body(resource);
+    }
     @Data
     @AllArgsConstructor
     public static class ImageDTO{

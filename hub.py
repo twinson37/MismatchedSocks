@@ -17,7 +17,7 @@ results = model(im)
 
 # Results
 results.save()  # or .show(), .save(), .crop(), .pandas(), etc.
-results.show()
+# results.show()
 
 results.xyxy[0]  # im predictions (tensor)
 results.pandas().xyxy[0]  # im predictions (pandas)
