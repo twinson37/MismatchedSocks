@@ -137,40 +137,15 @@ public class ImgServiceNoSession {
             pb.redirectError(ProcessBuilder.Redirect.INHERIT);
             Process p = pb.start();
             p.waitFor();
-//            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//            try{
-//                System.out.println("first try");
-//
-//                String line="";
-//                while((line = br.readLine())!=null){
-//                    System.out.println("readline");
-//
-//                    System.out.println(">>> " + line);
-//                    sb.append(line);
-//                }
-//                p.getInputStream().close();
-//            }catch(Exception e){
-//                System.out.println("Exception");
-//
-//                e.printStackTrace();
-//            }finally {
-//                System.out.println("finally");
-//
-//                try{
-//                    System.out.println("try");
-//
-//                    if(br!=null){
-//                        System.out.println("br.close");
-//
-//                        br.close();
-//                    }
-//                }catch(Exception e){
-//                    System.out.println("execption2");
-//
-//                    e.printStackTrace();
-//                }
-//
-//            }
+
+            String dl_dir = String.format("%s/MismatchedSocks/DL_search.py",directoryPath);
+            ProcessBuilder dl_pb = new ProcessBuilder("python3", dl_dir,"-y");
+            dl_pb.directory(new File(String.valueOf(directoryPath)));
+            dl_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+            dl_pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+            Process dl_p = dl_pb.start();
+            dl_p.waitFor();
+
 
         }
 
