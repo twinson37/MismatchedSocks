@@ -117,7 +117,7 @@ public class ImgApiController {
 
     public byte[] uploadImageDetect(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, InterruptedException {
 
-        Long img_id = imgService.storeImg(file);
+        imgService.storeImg(file);
         String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpg";
         InputStream imageStream = new FileInputStream(path);
         return IOUtils.toByteArray(imageStream);

@@ -138,15 +138,6 @@ public class ImgServiceNoSession {
             Process p = pb.start();
             p.waitFor();
 
-            String dl_dir = String.format("%s/MismatchedSocks/DL_search.py",directoryPath);
-            ProcessBuilder dl_pb = new ProcessBuilder("python3", dl_dir,"-y");
-            dl_pb.directory(new File(String.valueOf(directoryPath)));
-            dl_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-            dl_pb.redirectError(ProcessBuilder.Redirect.INHERIT);
-            Process dl_p = dl_pb.start();
-            dl_p.waitFor();
-
-
         }
 
 }
