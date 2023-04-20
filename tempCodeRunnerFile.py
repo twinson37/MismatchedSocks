@@ -1,1 +1,0 @@
-image_list[0],list(temp.values())[0]
