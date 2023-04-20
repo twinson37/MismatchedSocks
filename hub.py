@@ -47,7 +47,8 @@ num = len(image_list)
 
 mathced = list()
 for _ in range(num):
-    shutil.rmtree(meta_path)
+    if(os.path.isdir(meta_path)):
+        shutil.rmtree(meta_path)
 
     st = Search_Setup(image_list, model_name="vgg19", pretrained=True, image_count=None)
     st.run_index()
