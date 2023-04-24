@@ -128,6 +128,8 @@ public class ImgServiceNoSession {
 
         public void py_detect() throws IOException, InterruptedException {
 
+            long beforeTime = System.currentTimeMillis();
+
             StringBuilder sb = new StringBuilder(1024);
             String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
             System.out.println("dir = " + dir);
@@ -137,6 +139,10 @@ public class ImgServiceNoSession {
             pb.redirectError(ProcessBuilder.Redirect.INHERIT);
             Process p = pb.start();
             p.waitFor();
+
+            long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+            long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
+            System.out.printf("시간(s) : %d%n",secDiffTime);
 
         }
 

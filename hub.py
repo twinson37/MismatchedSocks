@@ -5,7 +5,7 @@ from time import time
 from DeepImageSearch import Load_Data, Search_Setup
 import shutil
 
-start = time()
+# start = time()
 arg = sys.argv
 home_path = os.path.expanduser('~')
 # model = torch.hub.load('ultralytics/yolov5', 'custom', path='/Users/kimjungi/back/eunhy/yolov5/best.pt')
@@ -35,6 +35,7 @@ results.pandas().xyxy[0]  # im predictions (pandas)
 # metadata = st.get_image_metadata_file()
 # metadata = st.get_image_metadata_file()
 
+print(results.pandas().xyxy[0])
 
 
 img_path = os.path.join(home_path,"runs/detect/exp/crops/sock/")
@@ -46,7 +47,7 @@ image_list = dl.from_folder([img_path])
 num = len(image_list)
 
 mathced = list()
-# 발견 양말 없을 때 하나일 때 두개일때
+# 발견 양말 없을 때 하나일 때 두개일때?
 # dirListing = os.listdir(img_path)
 for _ in range(num):
     if(os.path.isdir(meta_path)):
@@ -54,7 +55,7 @@ for _ in range(num):
 
     st = Search_Setup(image_list, model_name="vgg19", pretrained=True, image_count=None)
     st.run_index()
-    print(st.get_similar_images(image_path=image_list[0], number_of_images=2))
+    # print(st.get_similar_images(image_path=image_list[0], number_of_images=2))
     temp = st.get_similar_images(image_path=image_list[0], number_of_images=2)
     temp.pop(0)
 
@@ -70,4 +71,4 @@ for _ in range(num):
 
 print(mathced)
 
-print(f"hub = {time() -start}")
+# print(f"hub = {time() -start}")
