@@ -49,6 +49,7 @@ num = len(image_list)
 mathced = list()
 # 발견 양말 없을 때 하나일 때 두개일때?
 # dirListing = os.listdir(img_path)
+
 for _ in range(num):
     if(os.path.isdir(meta_path)):
         shutil.rmtree(meta_path)

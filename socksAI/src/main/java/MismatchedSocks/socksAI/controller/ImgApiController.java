@@ -80,7 +80,7 @@ public class ImgApiController {
     }
     @ApiOperation(value = "이미지 반환", notes = "탐색 이미지 반환.")
     @ResponseBody
-    @GetMapping(
+    @PostMapping(
             value = "/image-response",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public  byte[] downloadImage() throws IOException {
@@ -112,7 +112,7 @@ public class ImgApiController {
     }
 
     @ApiOperation(value = "이미지 등록 후 바로 양말 탐색", notes = "제곧내")
-    @PostMapping(value = "/img-req-resp",
+    @PostMapping(value = "img-req-resp",
             produces = MediaType.IMAGE_JPEG_VALUE)
 
     public byte[] uploadImageDetect(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, InterruptedException {
