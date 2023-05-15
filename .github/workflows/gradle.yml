@@ -59,5 +59,8 @@ jobs:
           docker rm $(docker ps -a -q) 
           docker pull twinson37/socks-ai
           docker run -d -p 8080:8080 --name spring twinson37/socks-ai
+          docker cp /home/socks/docker_file/. spring:/root/eunhy
+
+
 
 
