@@ -116,7 +116,7 @@ public class ImgServiceNoSession {
     //            String uuid = UUID.randomUUID().toString();
             String uuid = "detected";
     //            return originalFilename ;
-            return uuid + "." + "jpeg";
+            return uuid + "." + ext;
         }
 
 

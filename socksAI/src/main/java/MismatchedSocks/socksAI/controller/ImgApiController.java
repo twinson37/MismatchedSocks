@@ -85,19 +85,20 @@ public class ImgApiController {
             value = "/image-response",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public  byte[] downloadImage() throws IOException {
-        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpeg";
+        Path path = Path.of(detectedImagePath());
         System.out.println("path = " + path);
-        InputStream imageStream = new FileInputStream(path);
+        InputStream imageStream = new FileInputStream(String.valueOf(path));
 //        InputStream in = getClass().getResourceAsStream(imageStream);
         return IOUtils.toByteArray(imageStream);
     }
     @ApiOperation(value = "이미지 다운", notes = "탐색 이미지 다운로드.")
     @GetMapping("/image-download")
     public ResponseEntity<Resource> downloadAttach() throws IOException {
+        Path path = Path.of(detectedImagePath());
         Path directoryPath = Path.of(System.getProperty("user.home"));
 
         UrlResource resource = new UrlResource("file:" +
-                directoryPath+"/runs/detect/exp/detected.jpg");
+                path);
         File file = resource.getFile();
 //        log.info("uploadFileName={}", uploadFileName);
 
@@ -119,13 +120,33 @@ public class ImgApiController {
     public byte[] uploadImageDetect(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, InterruptedException {
 
         imgService.storeImg(file);
-        String name = imgService.return_filename(file);
+        Path path = Path.of(detectedImagePath());
 
-        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpeg";
-        InputStream imageStream = new FileInputStream(path);
+//        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpeg";
+        InputStream imageStream = new FileInputStream(String.valueOf(path));
         return IOUtils.toByteArray(imageStream);
 
     }
+
+    private String detectedImagePath() {
+        File directory = new File(System.getProperty("user.home")+"/runs/detect/exp/");
+        String name = new String();
+
+        if (directory.exists() && directory.isDirectory()) {
+            // 디렉터리 내의 폴더 목록을 가져옵니다.
+            File[] folders = directory.listFiles(File::isFile);
+
+            // 각 폴더의 이름을 출력합니다.
+            for (File folder : folders) {
+                name = folder.getName();
+                System.out.println(folder.getName());
+            }
+        } else {
+            System.out.println("디렉터리가 존재하지 않거나 디렉터리가 아닙니다.");
+        }
+        return Path.of(System.getProperty("user.home"))+"/runs/detect/exp/"+name;
+    }
+
     @Data
     @AllArgsConstructor
     public static class ImageDTO{
