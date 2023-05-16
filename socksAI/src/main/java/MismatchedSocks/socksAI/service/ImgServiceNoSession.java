@@ -30,12 +30,14 @@ public class ImgServiceNoSession {
 //    String path = currentPath.toAbsolutePath().toString();
 //    private String path1 = path;
         private final String fileDir = directoryPath+"/img/";
-        public String getFullPath(String filename) {
+
+    public String getFullPath(String filename) {
             return fileDir + filename;
         }
         private final ImgRepositoryNoSession imgRepository;
         private final MemberService memberService;
         String storeFileName;
+        String originalFilename;
 
         public void saveItem(ImgNoMember img){
             imgRepository.save(img);
@@ -99,21 +101,24 @@ public class ImgServiceNoSession {
             ImgNoMember img = new ImgNoMember();
             img.setName(multipartFile.getOriginalFilename());
 //        System.out.println("!!!member = " + member.getUser_id());
-            String originalFilename = multipartFile.getOriginalFilename();
+            originalFilename = multipartFile.getOriginalFilename();
             storeFileName = createStoreFileName(originalFilename,img);
             multipartFile.transferTo(new File(getFullPath(storeFileName)));
             img.setUUID(storeFileName);
 
             imgRepository.save(img);
             py_detect();
+
             return img.getId();
         }
         private String createStoreFileName(String originalFilename,ImgNoMember img) {
             String ext = extractExt(originalFilename);
-//            String uuid = UUID.randomUUID().toString();
+    //            String uuid = UUID.randomUUID().toString();
             String uuid = "detected";
-            return uuid + "." + ext;
+    //            return originalFilename ;
+            return uuid + "." + "jpg";
         }
+
 
         private String extractExt(String originalFilename) {
             int pos = originalFilename.lastIndexOf(".");
@@ -131,9 +136,15 @@ public class ImgServiceNoSession {
             long beforeTime = System.currentTimeMillis();
 
             StringBuilder sb = new StringBuilder(1024);
-            String dir = String.format("%s/MismatchedSocks/hub.py",directoryPath);
-            System.out.println("dir = " + dir);
-            ProcessBuilder pb = new ProcessBuilder("python3", dir,storeFileName);
+            String dir = String.format("%s/eunhy/yolov5/detect.py",directoryPath);
+            String img = String.format("%s/%s",fileDir,storeFileName);
+            String pt = String.format("%s/eunhy/yolov5/runs/train/sock6/weights/best.pt",directoryPath);
+//
+//            System.out.println("dir = " + dir);
+//            System.out.println("pt = " + pt);
+//            System.out.println("storefilename = "+ originalFilename);
+//            --weights ./runs/train/sock6/weights/best.pt --source
+            ProcessBuilder pb = new ProcessBuilder("python3", dir,"--weights",pt,"--source",img);
             pb.directory(new File(String.valueOf(directoryPath)));
             pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
             pb.redirectError(ProcessBuilder.Redirect.INHERIT);
@@ -146,4 +157,11 @@ public class ImgServiceNoSession {
 
         }
 
+    public String return_filename(MultipartFile multipartFile){
+        ImgNoMember img = new ImgNoMember();
+        String originalFilename = multipartFile.getOriginalFilename();
+        String storeFileName = createStoreFileName(originalFilename,img);
+
+        return storeFileName;
+    }
 }

@@ -43,6 +43,7 @@ public class ImgApiController {
     private final ImgServiceNoSession imgService;
     private final MemberService memberService;
 
+
     @ApiOperation(value = "이미지 등록", notes = "이미지를 업로드 가능합니다.")
     @PostMapping(value = "/img-upload")
     public ResponseEntity<?> uploadImageToFileSystem(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, InterruptedException {
@@ -84,7 +85,7 @@ public class ImgApiController {
             value = "/image-response",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public  byte[] downloadImage() throws IOException {
-        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpg";
+        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpeg";
         System.out.println("path = " + path);
         InputStream imageStream = new FileInputStream(path);
 //        InputStream in = getClass().getResourceAsStream(imageStream);
@@ -100,7 +101,7 @@ public class ImgApiController {
         File file = resource.getFile();
 //        log.info("uploadFileName={}", uploadFileName);
 
-        String encodedUploadFileName = UriUtils.encode("detected.jpg",
+        String encodedUploadFileName = UriUtils.encode("detected.jpeg",
                 StandardCharsets.UTF_8);
         String contentDisposition = "attachment; filename=\"" +
                 encodedUploadFileName + "\"";
@@ -118,7 +119,9 @@ public class ImgApiController {
     public byte[] uploadImageDetect(HttpServletRequest request, @RequestParam("image") MultipartFile file) throws IOException, InterruptedException {
 
         imgService.storeImg(file);
-        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpg";
+        String name = imgService.return_filename(file);
+
+        String path = Path.of(System.getProperty("user.home"))+"/runs/detect/exp/detected.jpeg";
         InputStream imageStream = new FileInputStream(path);
         return IOUtils.toByteArray(imageStream);
 
