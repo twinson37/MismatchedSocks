@@ -87,19 +87,28 @@ public class ImgApiController {
     public  byte[] downloadImage() throws IOException {
         Path path = Path.of(detectedImagePath());
         System.out.println("path = " + path);
+//        imgService.deleteFolder(String.valueOf(path));
         File f = new File(String.valueOf(path));
-        if(f.exists()) {
-            System.out.println("파일 존재");
-            InputStream imageStream = new FileInputStream(String.valueOf(path));
-            return IOUtils.toByteArray(imageStream);
-
-        } else {
-            System.out.println("파일 없음");
+        if(f.isDirectory()){
+            System.out.println("디렉터리거나 파일 없음");
             File file = new File(System.getProperty("user.home")+"/eunhy/404.png");
             InputStream imageStream = new FileInputStream(String.valueOf(file));
 
             return IOUtils.toByteArray(imageStream);
+        }else{
+            if(f.exists()) {
+                System.out.println("파일 존재");
+                InputStream imageStream = new FileInputStream(String.valueOf(path));
+                return IOUtils.toByteArray(imageStream);
 
+            } else {
+                System.out.println("파일 없음");
+                File file = new File(System.getProperty("user.home")+"/eunhy/404.png");
+                InputStream imageStream = new FileInputStream(String.valueOf(file));
+
+                return IOUtils.toByteArray(imageStream);
+
+            }
         }
 
 //        InputStream in = getClass().getResourceAsStream(imageStream);
